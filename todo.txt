@@ -1,0 +1,10 @@
+-create the models
+-create the login page
+-create the register page
+-create the landing page
+-create the home page
+    -the ability to buy more units
+    -display current units
+-create the transaction page
+-create the add token to meter
+-create the view previous transaction page
