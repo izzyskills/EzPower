@@ -65,7 +65,7 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(max_length=15, unique=True)
+    username = models.CharField(max_length=15, unique=True, db_index=True)
     address = models.CharField(max_length=50)
     phone_number = models.IntegerField()
     is_active = models.BooleanField(default=True)
@@ -86,6 +86,9 @@ class Account(models.Model):
     account_id = Custom11DigitIntegerField()
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f"{self.user.username} {self.account_id}"
+
 
 class Meter(models.Model):
     meter_id = Custom11DigitIntegerField()
@@ -102,5 +105,6 @@ class Token(models.Model):
 class Transaction(models.Model):
     transaction_id = Custom11DigitIntegerField()
     date = models.DateTimeField(auto_now_add=True)
+    amount = models.DecimalField(max_digits=9, decimal_places=2)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     token = models.OneToOneField(Token, on_delete=models.CASCADE)
