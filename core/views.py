@@ -52,3 +52,17 @@ def dashboard_view(request):
     }
 
     return render(request, "dashboard.html", context)
+
+
+def make_transaction_view(request):
+    form = forms.TransactionForm()
+    if request.method == "POST":
+        form = forms.TransactionForm(request.POST)
+        if form.is_valid:
+            transaction = form.save(commit=False)
+            account = models.Account.objects.get(user=request.user)
+            transaction.account = account
+            transaction.save()
+            return redirect("profile")
+
+    return render(request, "transaction.html", {"form": form})

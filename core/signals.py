@@ -13,4 +13,6 @@ def create_user_account(sender, instance, created, **kwargs):
 @receiver(pre_save, sender=Transaction)
 def generate_token(sender, instance, **kwargs):
     if not instance.token_id:
-        instance.token = Token.objects.create(unit=instance.amount / 450)
+        user = instance.account.user
+        meter = Meter.objects.get(user=user)
+        instance.token = Token.objects.create(unit=instance.amount / 450, meter=meter)

@@ -21,3 +21,9 @@ class LoginForm(AuthenticationForm):
     def clean_username(self):
         # Ensure the username is treated as lowercase
         return self.cleaned_data["username"].lower()
+
+
+class TransactionForm(forms.ModelForm):
+    class Meta:
+        model = models.Transaction
+        fields = ["amount"]

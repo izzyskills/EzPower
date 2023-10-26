@@ -7,7 +7,9 @@ from django.contrib.auth.models import (
 from django.core.exceptions import ValidationError
 import random
 
-# -- >  what the fuck is this for ? 
+# -- >  what the fuck is this for ?
+# in the sql we agreed that it was meant to be an 11 integer uid so i had to make this function./field
+
 
 class Custom11DigitIntegerField(models.IntegerField):
     def __init__(self, *args, **kwargs):
