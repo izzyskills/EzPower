@@ -66,3 +66,16 @@ def make_transaction_view(request):
             return redirect("profile")
 
     return render(request, "transaction.html", {"form": form})
+
+
+def previous_transaction_view(request):
+    transactions = models.Transaction.objects.filter(account=request.user.account)
+
+    return render(request, "history.html", {"transactions": transactions})
+
+
+def use_token(pk):
+    token = models.Token.objects.get(token_id=pk)
+    if token.used == False:
+        token.meter.unit += token.unit
+        token.save()

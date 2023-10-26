@@ -1,13 +1,15 @@
 Done-create the models
 Done-create the login page
 Done -create the register page
--create the landing page
--create the home page
+Done-create the landing page
+Done-create the home page
     -the ability to buy more units
     -display current units
--create the transaction page
--create the add token to meter
--create the view previous transaction page
+Done-create the transaction page
+DONE-create the add token to meter
+DONE-create the view previous transaction page
 
 
--link Meter and user,link token and meter
+Done-link Meter and user,link token and meter
+
+-STYLING AND FINALIZING the site 
