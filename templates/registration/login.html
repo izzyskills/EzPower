@@ -1,5 +1,8 @@
+{% extends "base.html" %} {% block header %} Login {% endblock header %} 
+{%block content %}
 <div>
   <form action="" method="post">
     {% csrf_token %} {{form.as_p}} <input type="submit" value="Login" />
   </form>
 </div>
+{% endblock content %}

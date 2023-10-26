@@ -1,0 +1,35 @@
+{% extends "base.html" %} 
+{% block header %}{{username}} Profile{%endblock header %} 
+{% block content %}
+<div>
+  <h3>Meter Balance: {{meter.unit}}</h3>
+  <p>
+    Location: {{meter.location}} <br />
+    Meter No : {{meter.meter_id}}
+  </p>
+</div>
+
+<div>
+  <h3>Account Number: {{account_no}}</h3>
+  <div>
+    <h4>Previous Transactions</h4>
+    <div class="transactions">
+      {% for transaction in transactions %}
+      <div id="{{transaction.transaction_id}}">
+        <h5>Transaction id: {{transaction.transaction_id}}</h5>
+        <p>
+          amount: {{transaction.amount}}
+          <br />
+          units: {{transaction.token.unit}}
+          <br />
+          Date: {{transaction.date}} <br />
+        </p>
+        <h6>Token: {{transaction.token.token_id}}</h6>
+      </div>
+      {% endfor %}
+    </div>
+    <button><a href="">View all Transactions</a></button>
+  </div>
+  <button><a href="">Buy Unit</a></button>
+</div>
+{% endblock content %}

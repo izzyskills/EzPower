@@ -94,12 +94,14 @@ class Meter(models.Model):
     meter_id = Custom11DigitIntegerField()
     location = models.CharField(max_length=50)
     unit = models.DecimalField(max_digits=9, decimal_places=2)
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
 
 
 class Token(models.Model):
     token_id = Custom11DigitIntegerField()
     unit = models.DecimalField(max_digits=9, decimal_places=2)
     used = models.BooleanField(default=False)
+    meter = models.ForeignKey(Meter, on_delete=models.CASCADE)
 
 
 class Transaction(models.Model):
