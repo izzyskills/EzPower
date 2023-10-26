@@ -7,6 +7,7 @@ from django.contrib.auth.models import (
 from django.core.exceptions import ValidationError
 import random
 
+# -- >  what the fuck is this for ? 
 
 class Custom11DigitIntegerField(models.IntegerField):
     def __init__(self, *args, **kwargs):
