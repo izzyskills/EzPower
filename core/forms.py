@@ -8,12 +8,9 @@ class UserCreationForm(UserCreationForm):
         model = models.CustomUser
         fields = ["username", "address", "phone_number", "password1", "password2"]
 
-    def clean_username(self):
-        return self.cleaned_data["username"].lower()
-
     def clean(self):
         cleaned_data = super().clean()
-        cleaned_data["username"] = self.clean_username()
+        cleaned_data["username"] = cleaned_data["username"].lower()
         return cleaned_data
 
 

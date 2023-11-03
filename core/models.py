@@ -4,35 +4,7 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin,
 )
-from django.core.exceptions import ValidationError
-import random
-
-# -- >  what the fuck is this for ?
-# in the sql we agreed that it was meant to be an 11 integer uid so i had to make this function./field
-
-
-class Custom11DigitIntegerField(models.IntegerField):
-    def __init__(self, *args, **kwargs):
-        kwargs["primary_key"] = True
-        kwargs["default"] = self.generate_unique_11_digit_integer
-        kwargs["unique"] = True
-        kwargs["validators"] = [self.validate_11_digit_integer]
-        super().__init__(*args, **kwargs)
-
-    def generate_unique_11_digit_integer(self):
-        while True:
-            value = random.randint(100_000_000_00, 999_999_999_99)
-            if (
-                not Account.objects.filter(account_id=value).exists()
-                and not Transaction.objects.filter(transaction_id=value).exists()
-                and not Token.objects.filter(token_id=value).exists()
-                and not Meter.objects.filter(meter_id=value).exists()
-            ):
-                return value
-
-    def validate_11_digit_integer(self, value):
-        if not (100_000_000_00 <= value <= 999_999_999_99):
-            raise ValidationError("Value must be an 11-digit integer.")
+from .utility import Random11digit
 
 
 class CustomUserManager(BaseUserManager):
@@ -86,7 +58,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 # Create your models here.
 class Account(models.Model):
-    account_id = Custom11DigitIntegerField()
+    account_id = Random11digit()
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -94,21 +66,21 @@ class Account(models.Model):
 
 
 class Meter(models.Model):
-    meter_id = Custom11DigitIntegerField()
+    meter_id = Random11digit()
     location = models.CharField(max_length=50)
     unit = models.DecimalField(max_digits=9, decimal_places=2)
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
 
 
 class Token(models.Model):
-    token_id = Custom11DigitIntegerField()
+    token_id = Random11digit()
     unit = models.DecimalField(max_digits=9, decimal_places=2)
     used = models.BooleanField(default=False)
     meter = models.ForeignKey(Meter, on_delete=models.CASCADE)
 
 
 class Transaction(models.Model):
-    transaction_id = Custom11DigitIntegerField()
+    transaction_id = Random11digit()
     date = models.DateTimeField(auto_now_add=True)
     amount = models.DecimalField(max_digits=9, decimal_places=2)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
