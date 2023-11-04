@@ -13,10 +13,6 @@
   </head>
   <body>
     {% include "navbar.html" %}
-    <div class="container">
-      <section class="section">
-        <main>{% block content %}{% endblock content %}</main>
-      </section>
-    </div>
+    <section class="section">{% block content %}{% endblock content %}</section>
   </body>
 </html>
