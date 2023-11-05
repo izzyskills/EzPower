@@ -35,7 +35,10 @@ def logout_view(request):
 
 
 def home_view(request):
-    return render(request, "home.html")
+    if request.user.is_authenticated:
+        return redirect("profile")
+    else:
+        return redirect("register")
 
 
 @login_required(login_url="login")
@@ -72,10 +75,3 @@ def previous_transaction_view(request):
     transactions = models.Transaction.objects.filter(account=request.user.account)
 
     return render(request, "history.html", {"transactions": transactions})
-
-
-def use_token(pk):
-    token = models.Token.objects.get(token_id=pk)
-    if token.used == False:
-        token.meter.unit += token.unit
-        token.save()

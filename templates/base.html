@@ -9,10 +9,11 @@
       type="text/css"
       href="{% static 'bulma.min.css' %}"
     />
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
     <title>Ezpower</title>
   </head>
   <body>
     {% include "navbar.html" %}
-    <section class="section">{% block content %}{% endblock content %}</section>
+    <div class="container">{% block content %}{% endblock content %}</div>
   </body>
 </html>

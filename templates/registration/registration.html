@@ -1,29 +1,35 @@
 {% extends "base.html" %} {%block content %}
 <div class="hero is-info">
   <div class="columns">
-    <div class="column">
-      <section class="hero mb-8">
-        <div class="hero-body has-text-centered">
-          <p class="title mb-6 is-size-1">Welcome to Ezpower</p>
-          <p class="subtitle">Recharge Your meter easily with EzPower</p>
-        </div>
-      </section>
+    <div class="column cent">
+      <div class="hero-body has-text-centered">
+        <p class="title mb-6 is-size-1">Welcome to Ezpower</p>
+        <p class="subtitle">Recharge Your meter easily with EzPower</p>
+      </div>
     </div>
     <div class="column has-text-cnetered">
-      <h2 class="is-size-2 has-text-centered">Create Account</h2>
       <div class="column is-centered">
-        <form action="" class="form is-centered" method="post">
+        <form action="" class="login-form is-centered" method="post">
+          <p class="ttitle">Register</p>
           {% csrf_token %} {% for field in form %}
-          <div class="field">
-            <label class="" for="field.label">{{field.label}}</label>
-            <div class="control">{{field}}{{field.errors}}</div>
-          </div>
+          <label>
+            {{field}}
+            <span>{{field.label}}</span>
+          </label>
           {% endfor %}
+          <p class="signin">
+            Already have an acount ?
+            <a href="{% url 'login' %}" style="color: royalblue">Signin</a>
+          </p>
           <input class="button is-primary" type="submit" value="Register" />
         </form>
       </div>
     </div>
   </div>
 </div>
-
+<style>
+  html {
+    background-color: #3f8ed0;
+  }
+</style>
 {% endblock content %}
