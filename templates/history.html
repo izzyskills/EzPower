@@ -1,17 +1,5 @@
 {% extends "base.html" %} {% block content %}
-<div class="transactions columns is-multiline">
-  {% for transaction in transactions %}
-  <div class="column is-3" id="{{transaction.transaction_id}}">
-    <h5>Transaction id: {{transaction.transaction_id}}</h5>
-    <p>
-      amount: {{transaction.amount}}
-      <br />
-      units: {{transaction.token.unit}}
-      <br />
-      Date: {{transaction.date}} <br />
-    </p>
-    <h6>Token: {{transaction.token.token_id}}</h6>
-  </div>
-  {% endfor %}
-</div>
-{% endblock content %}
+<h1 class="title is-size-1 has-text-centered">
+  {{username}}'s Previous Transactions
+</h1>
+{% include "transaction_files.html" %} {% endblock content %}

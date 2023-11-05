@@ -1,35 +1,26 @@
-{% extends "base.html" %} 
-{% block header %}{{username}} Profile{%endblock header %} 
-{% block content %}
-<div>
-  <h3>Meter Balance: {{meter.unit}}</h3>
-  <p>
-    Location: {{meter.location}} <br />
-    Meter No : {{meter.meter_id}}
+{% extends "base.html" %} {% block content %}
+<h1 class="title is-size-1 has-text-centered">{{username}}'s Profile</h1>
+<div class="box">
+  <h3 class="is-size-3">
+    Meter Balance: <strong class="is-size-2">{{meter.unit}}</strong>
+  </h3>
+  <p class="is-size-5">
+    Location: <strong class="is-size-4">{{meter.location}} </strong><br />
+    Meter No : <strong class="is-size-4">{{meter.meter_id}}</strong>
   </p>
+  <a href="{% url 'make-transaction' %}">
+    <button class="button is-primary" type="submit">Buy Unit</button>
+  </a>
 </div>
 
 <div>
-  <h3>Account Number: {{account_no}}</h3>
+  <h3 class="title is-size-2 has-text-centered">
+    Account Number: {{account_no}}
+  </h3>
   <div>
-    <h4>Previous Transactions</h4>
-    <div class="transactions">
-      {% for transaction in transactions %}
-      <div id="{{transaction.transaction_id}}">
-        <h5>Transaction id: {{transaction.transaction_id}}</h5>
-        <p>
-          amount: {{transaction.amount}}
-          <br />
-          units: {{transaction.token.unit}}
-          <br />
-          Date: {{transaction.date}} <br />
-        </p>
-        <h6>Token: {{transaction.token.token_id}}</h6>
-      </div>
-      {% endfor %}
-    </div>
+    <h4 class="title is-size-3 has-text-centered">Previous Transactions</h4>
+    {% include "transaction_files.html" %}
     <button><a href="{% url 'history' %}">View all Transactions</a></button>
   </div>
-  <button><a href="{% url 'make-transaction' %}">Buy Unit</a></button>
 </div>
 {% endblock content %}

@@ -1,0 +1,27 @@
+<div class="transactions columns is-multiline">
+  {% for transaction in transactions %}
+  <div class="column is-3" id="{{transaction.transaction_id}}">
+    <div class="box">
+      <h5 class="title is-size-6">
+        Transaction id:
+        <strong class="is-size-5">{{transaction.transaction_id}}</strong>
+      </h5>
+      <p class="is-size-8">
+        amount: <strong class="is-size-7">{{transaction.amount}}</strong>
+        <br />
+        units: <strong class="is-size-7">{{transaction.token.unit}}</strong>
+        <br />
+        Date: <strong class="is-size-7">{{transaction.date}}</strong> <br />
+      </p>
+      <h6 class="title is-size-7">
+        Token:
+        <strong
+          class="is-size-6"
+          style="color:  {% if transaction.token.used %}#F14667{% else %}#49C78E{% endif %};"
+          >{{transaction.token.token_id}}</strong
+        >
+      </h6>
+    </div>
+  </div>
+  {% endfor %}
+</div>

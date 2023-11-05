@@ -48,7 +48,7 @@ def dashboard_view(request):
     meter = models.Meter.objects.get(user=user)
     Transaction = models.Transaction.objects.filter(account=account)
     context = {
-        "username": user.username,
+        "username": user.username.title(),
         "account_no": account.account_id,
         "meter": meter,
         "transactions": Transaction[:5],
@@ -74,4 +74,11 @@ def make_transaction_view(request):
 def previous_transaction_view(request):
     transactions = models.Transaction.objects.filter(account=request.user.account)
 
-    return render(request, "history.html", {"transactions": transactions})
+    return render(
+        request,
+        "history.html",
+        {
+            "transactions": transactions,
+            "username": request.user.username.title(),
+        },
+    )
