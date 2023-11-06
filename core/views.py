@@ -50,6 +50,7 @@ def dashboard_view(request):
     context = {
         "username": user.username.title(),
         "account_no": account.account_id,
+        "account_balance": account.balance,
         "meter": meter,
         "transactions": Transaction[:5],
     }
@@ -57,20 +58,28 @@ def dashboard_view(request):
     return render(request, "dashboard.html", context)
 
 
+@login_required(login_url="login")
 def make_transaction_view(request):
     form = forms.TransactionForm()
+    account = models.Account.objects.get(user=request.user)
+    balance = account.balance
     if request.method == "POST":
         form = forms.TransactionForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             transaction = form.save(commit=False)
             account = models.Account.objects.get(user=request.user)
+            account.balance -= transaction.amount
             transaction.account = account
+            account.save()
             transaction.save()
             return redirect("profile")
 
-    return render(request, "transaction.html", {"form": form})
+    return render(
+        request, "transaction.html", {"form": form, "account_balance": balance}
+    )
 
 
+@login_required(login_url="login")
 def previous_transaction_view(request):
     transactions = models.Transaction.objects.filter(account=request.user.account)
 
@@ -80,5 +89,36 @@ def previous_transaction_view(request):
         {
             "transactions": transactions,
             "username": request.user.username.title(),
+        },
+    )
+
+
+@login_required(login_url="login")
+def use_token(request, pk):
+    token = models.Token.objects.get(token_id=pk)
+    if token.used == False:
+        token.meter.unit += token.unit
+        token.used = True
+        token.meter.save()
+        token.save()
+    return redirect("profile")
+
+
+@login_required(login_url="login")
+def recharge_account(request):
+    account = models.Account.objects.get(user=request.user)
+    if request.method == "POST":
+        amountForm = forms.AccountRechargeForm(request.POST)
+        if amountForm.is_valid():
+            account.balance += amountForm.cleaned_data["amount"]
+            account.save()
+            return redirect("profile")
+    return render(
+        request,
+        "recharge.html",
+        {
+            "form": forms.AccountRechargeForm(),
+            "account_no": account.account_id,
+            "balance": account.balance,
         },
     )

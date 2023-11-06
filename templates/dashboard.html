@@ -13,14 +13,22 @@
   </a>
 </div>
 
-<div>
-  <h3 class="title is-size-2 has-text-centered">
-    Account Number: {{account_no}}
+<div class="box">
+  <h3 class="is-size-3">
+    Account Number: <strong class="is-size-2">{{account_no}}</strong>
   </h3>
-  <div>
-    <h4 class="title is-size-3 has-text-centered">Previous Transactions</h4>
-    {% include "transaction_files.html" %}
-    <button><a href="{% url 'history' %}">View all Transactions</a></button>
-  </div>
+  <h3 class="is-size-3">
+    Account Balance: <strong class="is-size-2">{{account_balance}}</strong>
+  </h3>
+  <a href="{% url 'recharge' %}">
+    <button class="button is-primary" type="submit">Recharge Account</button>
+  </a>
+</div>
+<div>
+  <h4 class="title is-size-3 has-text-centered">Previous Transactions</h4>
+  {% include "transaction_files.html" %}
+  <a href="{% url 'history' %}"
+    ><button class="button is-info">View all Transactions</button></a
+  >
 </div>
 {% endblock content %}

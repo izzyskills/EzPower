@@ -1,7 +1,64 @@
-{% extends "base.html" %} {% block header %} Make Transaction{% endblock header%} 
-{% block content %}
-<form action="" method="post">
-  {% csrf_token %} {{form.as_p}}
-  <input type="submit" value="Submit" />
-</form>
+{% extends "base.html" %} {%block content %}
+<div class="cent">
+  <form action="" class="login-form is-centered" method="post">
+    <p class="ttitle">Buy Unit</p>
+    {% csrf_token %} {% for field in form %}
+    <p class="is-size-5">
+      Account Balance: <strong class="is-size-4">{{account_balance}}</strong>
+    </p>
+    <label>
+      {{field}}
+      <span>{{field.label}}</span>
+    </label>
+    {% endfor %}
+    <div class="form-group">
+      <label for="">
+        <p id="unit-display" class="input">0</p>
+        <span>Unit</span></label
+      >
+    </div>
+    <input
+      class="button is-primary"
+      id="submit-button"
+      type="submit"
+      value="Buy Unit"
+    />
+    <p
+      id="error-message"
+      style="color: rgba(254, 74, 74, 0.822); font-size: 14px"
+    ></p>
+  </form>
+</div>
+<style>
+  html {
+    background-color: #3f8ed0;
+  }
+</style>
+<script>
+  let amountField = document.getElementById("amount");
+  let unitDisplay = document.getElementById("unit-display");
+  let submitButton = document.getElementById("submit-button");
+  let errorMessage = document.getElementById("error-message");
+
+  amountField.addEventListener("input", function () {
+    let amount = parseFloat(amountField.value);
+    if (!isNaN(amount)) {
+      let equivalentUnit = amount / 450;
+      unitDisplay.textContent = equivalentUnit.toFixed(2);
+    } else {
+      unitDisplay.textContent = "0";
+    }
+  });
+
+  submitButton.addEventListener("click", function (e) {
+    let amount = parseFloat(amountField.value);
+    let accountBalance = parseFloat("{{ account_balance }}");
+    if (isNaN(amount) || amount > accountBalance) {
+      errorMessage.textContent = "Amount exceeds account balance.";
+      e.preventDefault(); // Prevent form submission
+    } else {
+      errorMessage.textContent = "";
+    }
+  });
+</script>
 {% endblock content %}

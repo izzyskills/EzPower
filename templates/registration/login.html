@@ -3,10 +3,15 @@
   <form action="" class="login-form is-centered" method="post">
     <p class="ttitle">Login</p>
     {% csrf_token %} {% for field in form %}
-    <label>
-      {{field}}
-      <span>{{field.label}}</span>
-    </label>
+    <div>
+      <label>
+        {{field}}
+        <span>{{field.label}}</span>
+      </label>
+      {% for error in fields.errors %}
+      <p class="help is-danger">{{error}}</p>
+      {% endfor %}
+    </div>
     {% endfor %}
     <p class="signin">
       Don't have an acount ?

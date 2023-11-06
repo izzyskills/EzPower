@@ -13,15 +13,30 @@
         <br />
         Date: <strong class="is-size-7">{{transaction.date}}</strong> <br />
       </p>
-      <h6 class="title is-size-7">
+      <h6
+        class="title is-size-7 {% if transaction.token.used %}used{% else %}not-used{% endif %}"
+      >
         Token:
         <strong
           class="is-size-6"
           style="color:  {% if transaction.token.used %}#F14667{% else %}#49C78E{% endif %};"
           >{{transaction.token.token_id}}</strong
         >
+        {% if not transaction.token.used %}
+        <a href="{% url 'use-token' transaction.token.token_id %}">
+          <button class="button is-success use-token-button">Use Token</button>
+        </a>
+        {% endif %}
       </h6>
     </div>
   </div>
   {% endfor %}
 </div>
+<style>
+  .use-token-button {
+    display: none;
+  }
+  .not-used:hover .use-token-button {
+    display: inline-flex;
+  }
+</style>

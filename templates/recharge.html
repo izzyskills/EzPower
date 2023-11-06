@@ -1,0 +1,46 @@
+{% extends "base.html" %} {%block content %}
+<div class="hero is-info">
+  <div class="columns">
+    <div class="column cent">
+      <div>
+        <p class="title is-size-1">Recharge Your Account</p>
+        <h3 class="is-size-3">
+          Account Number:
+          <strong class="is-size-2">{{account_no}}</strong>
+        </h3>
+        <h3 class="is-size-3">
+          Account Balance:
+          <strong class="is-size-2">{{balance}}</strong>
+        </h3>
+      </div>
+    </div>
+    <div class="column">
+      <div class="column has-text-black cent">
+        <form action="" class="login-form is-centered" method="post">
+          <p class="ttitle">Recharge</p>
+          {% csrf_token %}
+          <label for="{{ form.payment_method.id_for_label }}" class="is-size-5"
+            >Choose your Payment Method:</label
+          >
+          {% for choice in form.payment_method %}
+          <label class="radio-inline"> {{choice}} </label>
+          {% endfor %}
+          <label>
+            {{form.amount}}
+            <span>{{form.amount.label}}</span>
+          </label>
+          <input class="button is-primary" type="submit" value="submit" />
+          {% for error in form.errors %}
+          <p class="help is-danger">{{error}}</p>
+          {% endfor %}
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  html {
+    background-color: #3f8ed0;
+  }
+</style>
+{% endblock content %}

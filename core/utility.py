@@ -30,10 +30,3 @@ class Random11digit(md.IntegerField):
     def validate_11_digit_integer(self, value):
         if not (100_000_000_00 <= value <= 999_999_999_99):
             raise ValidationError("Value must be an 11-digit integer.")
-
-
-def use_token(pk):
-    token = models.Token.objects.get(token_id=pk)
-    if token.used == False:
-        token.meter.unit += token.unit
-        token.save()

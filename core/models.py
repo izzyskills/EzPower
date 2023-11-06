@@ -59,6 +59,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 # Create your models here.
 class Account(models.Model):
     account_id = Random11digit()
+    balance = models.DecimalField(max_digits=10, decimal_places=2)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):

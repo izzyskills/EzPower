@@ -6,7 +6,7 @@ from .models import CustomUser, Transaction, Account, Token, Meter
 @receiver(post_save, sender=CustomUser)
 def create_user_account(sender, instance, created, **kwargs):
     if created:
-        Account.objects.create(user=instance)
+        Account.objects.create(user=instance, balance=0.00)
         Meter.objects.create(user=instance, location=instance.address, unit=0)
 
 

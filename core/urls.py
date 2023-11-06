@@ -9,4 +9,6 @@ urlpatterns = [
     path("profile/", views.dashboard_view, name="profile"),
     path("transaction/new", views.make_transaction_view, name="make-transaction"),
     path("transaction/previous", views.previous_transaction_view, name="history"),
+    path("transaction/token/use/<int:pk>/", views.use_token, name="use-token"),
+    path("account/recharge/", views.recharge_account, name="recharge"),
 ]
