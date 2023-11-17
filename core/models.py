@@ -86,3 +86,6 @@ class Transaction(models.Model):
     amount = models.DecimalField(max_digits=9, decimal_places=2)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     token = models.OneToOneField(Token, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ("-date",)
